@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.popcornmatch.app",
+      "sha256_cert_fingerprints": [
+        "60:3B:18:73:CA:DD:83:74:07:CD:67:9A:10:86:97:45:D7:00:38:05:EB:7F:27:C3:C1:98:03:A3:AE:43:3E:12"
+      ]
+    }
+  }
+]

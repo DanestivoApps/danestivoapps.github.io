@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Únete a mi sala · PopcornMatch</title>
+<meta property="og:title" content="Únete a mi sala en PopcornMatch">
+<meta property="og:description" content="Elegimos juntos qué película o serie ver. Toca para entrar.">
+<style>
+  :root { --bg:#0B0C10; --surface:#15171D; --border:#2A2D36; --text:#F8F6F0; --muted:#9295A3; --gold:#FFB800; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; background:var(--bg); color:var(--text); font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; display:flex; align-items:center; justify-content:center; padding:24px 16px; }
+  main { width:100%; max-width:420px; background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:28px 22px; text-align:center; }
+  .brand { color:var(--gold); font-weight:800; letter-spacing:.08em; font-size:13px; text-transform:uppercase; }
+  h1 { font-size:24px; margin:10px 0 6px; }
+  p { color:var(--muted); margin:0 0 18px; }
+  .pin { font-size:44px; font-weight:800; letter-spacing:.3em; padding-left:.3em; color:var(--gold); margin:4px 0 22px; }
+  a.btn { display:block; padding:15px; border-radius:14px; font-weight:700; text-decoration:none; margin-top:10px; }
+  .primary { background:var(--gold); color:#0B0C10; }
+  .secondary { border:1px solid var(--border); color:var(--text); }
+  .hidden { display:none; }
+</style>
+</head>
+<body>
+<main>
+  <div class="brand">PopcornMatch</div>
+  <div id="ok">
+    <h1>Te han invitado a una sala</h1>
+    <p>Elegid juntos qué ver deslizando títulos. El PIN de la sala es:</p>
+    <div class="pin" id="pin"></div>
+    <a class="btn primary" id="open" href="#">Abrir en PopcornMatch</a>
+    <a class="btn secondary" id="store" href="https://play.google.com/store/apps/details?id=com.popcornmatch.app">Descargar en Google Play</a>
+    <p id="other" class="hidden" style="margin-top:18px">PopcornMatch está disponible para Android. Instálala y entra en Salas con este PIN.</p>
+  </div>
+  <div id="bad" class="hidden">
+    <h1>Invitación no válida</h1>
+    <p>Pide a quien te invitó un enlace nuevo o el PIN de 4 letras.</p>
+    <a class="btn secondary" href="https://play.google.com/store/apps/details?id=com.popcornmatch.app">Descargar en Google Play</a>
+  </div>
+</main>
+<script>
+  var PACKAGE = 'com.popcornmatch.app';
+  var STORE = 'https://play.google.com/store/apps/details?id=' + PACKAGE;
+  var code = (new URLSearchParams(location.search).get('code') || '').trim().toUpperCase();
+  if (!/^[A-Z]{4}$/.test(code)) {
+    document.getElementById('ok').className = 'hidden';
+    document.getElementById('bad').className = '';
+  } else {
+    document.getElementById('pin').textContent = code;
+    var android = /Android/i.test(navigator.userAgent);
+    // Chrome opens the app through the intent, or Google Play when it is not installed.
+    var intent = 'intent://join?code=' + code + '#Intent;scheme=popcornmatch;package=' + PACKAGE +
+      ';S.browser_fallback_url=' + encodeURIComponent(STORE) + ';end';
+    var open = document.getElementById('open');
+    if (android) {
+      open.href = intent;
+      location.replace(intent);
+    } else {
+      open.className = 'hidden';
+      document.getElementById('other').className = '';
+    }
+  }
+</script>
+</body>
+</html>
