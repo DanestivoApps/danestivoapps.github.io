@@ -9,7 +9,9 @@
   main { max-width:420px; }
   h1 { color:#FFB800; }
   p { color:#9295A3; }
-  a { display:inline-block; margin-top:12px; padding:14px 22px; border-radius:14px; background:#FFB800; color:#0B0C10; font-weight:700; text-decoration:none; }
+  .legal a { display:inline; padding:0; margin:0; background:none; color:#9295A3; font-weight:400; text-decoration:underline; }
+  .legal { margin-top:28px; font-size:14px; }
+  a#store { display:inline-block; margin-top:12px; padding:14px 22px; border-radius:14px; background:#FFB800; color:#0B0C10; font-weight:700; text-decoration:none; }
 </style>
 </head>
 <body>
@@ -17,12 +19,15 @@
   <h1>PopcornMatch</h1>
   <p id="tagline">Decide qué película o serie ver, solo o con amigos, deslizando títulos.</p>
   <a id="store" href="https://play.google.com/store/apps/details?id=com.popcornmatch.app">Descargar en Google Play</a>
+  <p class="legal"><a id="privacy" href="/privacidad/">Privacidad</a> · <a id="terms" href="/terminos/">Términos</a></p>
 </main>
 <script>
   if (!/^(es|ca|gl|eu)\b/i.test(navigator.language || '')) {
     document.documentElement.lang = 'en';
     document.getElementById('tagline').textContent = 'Decide what movie or show to watch, solo or with friends, by swiping titles.';
     document.getElementById('store').textContent = 'Get it on Google Play';
+    var p = document.getElementById('privacy'), t = document.getElementById('terms');
+    p.textContent = 'Privacy'; p.href = '/privacy/'; t.textContent = 'Terms'; t.href = '/terms/';
   }
 </script>
 </body>
