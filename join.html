@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Únete a mi sala · PopcornMatch</title>
-<meta property="og:title" content="Únete a mi sala en PopcornMatch">
-<meta property="og:description" content="Elegimos juntos qué película o serie ver. Toca para entrar.">
+<title>PopcornMatch</title>
+<meta property="og:title" content="PopcornMatch · Únete a mi sala / Join my room">
+<meta property="og:description" content="Elegimos juntos qué ver. · Let's pick what to watch together.">
 <style>
   :root { --bg:#0B0C10; --surface:#15171D; --border:#2A2D36; --text:#F8F6F0; --muted:#9295A3; --gold:#FFB800; }
   * { box-sizing:border-box; }
@@ -26,20 +26,28 @@
 <main>
   <div class="brand">PopcornMatch</div>
   <div id="ok">
-    <h1>Te han invitado a una sala</h1>
-    <p>Elegid juntos qué ver deslizando títulos. El PIN de la sala es:</p>
+    <h1 data-t="invited"></h1>
+    <p data-t="intro"></p>
     <div class="pin" id="pin"></div>
-    <a class="btn primary" id="open" href="#">Abrir en PopcornMatch</a>
-    <a class="btn secondary" id="store" href="https://play.google.com/store/apps/details?id=com.popcornmatch.app">Descargar en Google Play</a>
-    <p id="other" class="hidden" style="margin-top:18px">PopcornMatch está disponible para Android. Instálala y entra en Salas con este PIN.</p>
+    <a class="btn primary" id="open" href="#" data-t="open"></a>
+    <a class="btn secondary" href="https://play.google.com/store/apps/details?id=com.popcornmatch.app" data-t="store"></a>
+    <p id="other" class="hidden" style="margin-top:18px" data-t="android"></p>
   </div>
   <div id="bad" class="hidden">
-    <h1>Invitación no válida</h1>
-    <p>Pide a quien te invitó un enlace nuevo o el PIN de 4 letras.</p>
-    <a class="btn secondary" href="https://play.google.com/store/apps/details?id=com.popcornmatch.app">Descargar en Google Play</a>
+    <h1 data-t="invalid"></h1>
+    <p data-t="invalidBody"></p>
+    <a class="btn secondary" href="https://play.google.com/store/apps/details?id=com.popcornmatch.app" data-t="store"></a>
   </div>
 </main>
 <script>
+  var TEXT = {
+    es: { invited:'Te han invitado a una sala', intro:'Elegid juntos qué ver deslizando títulos. El PIN de la sala es:', open:'Abrir en PopcornMatch', store:'Descargar en Google Play', android:'PopcornMatch está disponible para Android. Instálala y entra en Salas con este PIN.', invalid:'Invitación no válida', invalidBody:'Pide a quien te invitó un enlace nuevo o el PIN de 4 letras.' },
+    en: { invited:"You've been invited to a room", intro:'Pick what to watch together by swiping titles. The room PIN is:', open:'Open in PopcornMatch', store:'Get it on Google Play', android:'PopcornMatch is available for Android. Install it and enter this PIN in Rooms.', invalid:'Invalid invitation', invalidBody:'Ask whoever invited you for a new link or the 4-letter PIN.' }
+  };
+  var lang = /^(es|ca|gl|eu)\b/i.test(navigator.language || '') ? 'es' : 'en';
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-t]').forEach(function (el) { el.textContent = TEXT[lang][el.getAttribute('data-t')]; });
+
   var PACKAGE = 'com.popcornmatch.app';
   var STORE = 'https://play.google.com/store/apps/details?id=' + PACKAGE;
   var code = (new URLSearchParams(location.search).get('code') || '').trim().toUpperCase();

@@ -15,8 +15,15 @@
 <body>
 <main>
   <h1>PopcornMatch</h1>
-  <p>Decide qué película o serie ver, solo o con amigos, deslizando títulos.</p>
-  <a href="https://play.google.com/store/apps/details?id=com.popcornmatch.app">Descargar en Google Play</a>
+  <p id="tagline">Decide qué película o serie ver, solo o con amigos, deslizando títulos.</p>
+  <a id="store" href="https://play.google.com/store/apps/details?id=com.popcornmatch.app">Descargar en Google Play</a>
 </main>
+<script>
+  if (!/^(es|ca|gl|eu)\b/i.test(navigator.language || '')) {
+    document.documentElement.lang = 'en';
+    document.getElementById('tagline').textContent = 'Decide what movie or show to watch, solo or with friends, by swiping titles.';
+    document.getElementById('store').textContent = 'Get it on Google Play';
+  }
+</script>
 </body>
 </html>
