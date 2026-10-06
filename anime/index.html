@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>秋風のシグナル — Akikaze no Signal</title>
+<meta name="description" content="Un minuto de anime romántico: ilustraciones animadas en 2.5D, escenarios generados por código y música original.">
+<meta property="og:title" content="秋風のシグナル — Akikaze no Signal">
+<meta property="og:description" content="Un minuto de prueba de anime romántico.">
+<meta property="og:image" content="assets/poster.jpg">
+<meta property="og:type" content="video.other">
+<link rel="preload" href="assets/fonts/shippori.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  @font-face { font-family: "Shippori"; src: url("assets/fonts/shippori.woff2") format("woff2"); font-weight: 700; font-display: block; }
+  @font-face { font-family: "ZenMaru"; src: url("assets/fonts/zenmaru.woff2") format("woff2"); font-weight: 500; font-display: block; }
+  @font-face { font-family: "Cormorant"; src: url("assets/fonts/cormorant.woff2") format("woff2"); font-weight: 500; font-style: italic; font-display: block; }
+  :root { --bg: #07060d; --fg: #fbeff3; --accent: #ff9fbf; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); overflow: hidden;
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  #stage { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+  #film { width: min(100vw, calc(100vh * 16 / 9)); height: auto; aspect-ratio: 16 / 9; display: block; background: #000; }
+  #overlay { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 18px; padding: 16px; text-align: center; background: radial-gradient(ellipse at 50% 60%, rgba(40,20,50,.35), rgba(7,6,13,.82)), url('assets/poster.jpg') center / cover;
+    transition: opacity .8s ease; }
+  #overlay.hidden { opacity: 0; pointer-events: none; }
+  #overlay h1 { margin: 0; font: 700 clamp(30px, 7vw, 64px)/1.1 "Shippori", "Noto Serif CJK JP", serif; letter-spacing: .12em;
+    text-shadow: 0 0 24px rgba(255,160,190,.55); }
+  #overlay p { margin: 0; color: #d9c6d6; max-width: 34em; font-size: clamp(13px, 2.4vw, 16px); }
+  #play { margin-top: 6px; border: 1px solid rgba(255,190,210,.6); background: rgba(255,159,191,.14); color: var(--fg);
+    padding: 12px 26px; border-radius: 999px; font: 600 16px/1 system-ui, sans-serif; cursor: pointer; letter-spacing: .04em;
+    backdrop-filter: blur(6px); transition: background .2s, transform .2s; }
+  #play:hover:not(:disabled) { background: rgba(255,159,191,.3); transform: translateY(-1px); }
+  #play:disabled { opacity: .6; cursor: progress; }
+  .loadbar { width: min(260px, 70vw); height: 2px; background: rgba(255,255,255,.12); border-radius: 2px; overflow: hidden; }
+  #load { height: 100%; width: 0; background: var(--accent); transition: width .2s; }
+  .hint { font-size: 12px !important; color: #8f8296 !important; }
+  #progress { position: fixed; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(255,255,255,.06); }
+  #bar { height: 100%; background: linear-gradient(90deg, #ffb3c9, #ffd9a0); transform-origin: left; transform: scaleX(0); }
+  #video { display: none; width: min(100vw, calc(100vh * 16 / 9)); aspect-ratio: 16 / 9; background: #000; }
+  body.videomode #film { display: none; }
+  body.videomode #video { display: block; }
+  .links { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; font-size: 14px; }
+  .links a { color: #ffc6d8; }
+  body.render #overlay, body.render #progress { display: none; }
+  body.render #stage { position: static; display: block; }
+  body.render #film { width: 1920px; height: 1080px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="film" width="1920" height="1080" aria-label="Animación: tráiler de anime romántico"></canvas>
+  <video id="video" src="assets/akikaze_1080p30.mp4" poster="assets/poster.jpg" preload="none" playsinline controls></video>
+</div>
+<div id="overlay">
+  <h1>秋風のシグナル</h1>
+  <p>Un minuto de anime romántico: ilustraciones animadas en 2.5D, escenarios y efectos generados por código y música original.</p>
+  <div class="loadbar"><div id="load"></div></div>
+  <button id="play" disabled>Cargando…</button>
+  <p class="links"><a href="#" id="asvideo">Ver como vídeo</a><a href="assets/akikaze_1080p30.mp4" download>Descargar MP4</a></p>
+  <p class="hint">Se dibuja en tiempo real en tu navegador · clic o espacio para pausar · F para pantalla completa · mejor con auriculares</p>
+</div>
+<div id="progress"><div id="bar"></div></div>
+<audio id="music" preload="auto">
+  <source src="assets/soundtrack.m4a" type="audio/mp4">
+  <source src="assets/soundtrack.ogg" type="audio/ogg">
+</audio>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
